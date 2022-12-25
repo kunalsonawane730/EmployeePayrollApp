@@ -214,3 +214,19 @@ select {
       align-items: flex-start;
     }
   }
+
+  /* UC7 */
+a.button:hover {
+    background: rgb(224, 73, 73);
+    color: white;
+}
+
+.submitButton:hover {
+    background: #0ca7a7;
+    color: white;
+}
+
+.resetButton:hover {
+    background: grey;
+    color: white;
+}
