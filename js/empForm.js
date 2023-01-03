@@ -16,18 +16,14 @@ function salaryOutput() {
 }
 
 function validateName() {
-    const name = document.querySelector('#name');
-    const textError = document.querySelector('.text-error');
+    let name = document.querySelector('#name');
+    let textError = document.querySelector('.text-error');
     name.addEventListener('input', function () {
-        if (name.value.length == 0) {
+        let nameRegex = RegExp('[A-Z]{1}[a-zA-Z\\s]{2,}$');
+        if (nameRegex.test(name.value)) {
             textError.textContent = "";
-            return;
-        }
-        try {
-            (new EmployeePayrollData()).name = name.value;
-            textError.textContent = "";
-        } catch (e) {
-            textError.textContent = e;
+        } else {
+            textError.textContent = "Name is Incorrect"
         }
     });
 }
@@ -35,11 +31,13 @@ function validateName() {
 function save(event) {
     alert("save")
 
-    event.preventDefault();
-    event.stopPropagation();
+    //event.preventDefault();
+    //event.stopPropagation();
 
     try {
        let EmployeePayrollData= createEmployeePayroll();
+       createAndUpdateStorage(employeePayrollData);
+       alert("Data Stored With name" + employeePayrollData.name);
     } catch (e) {
         return;
     }
@@ -84,4 +82,14 @@ const getInputValueById=(id)=>{
 const getInputElementValue=(id)=>{
     let value=document.getElementById(id).value;
     return value;
+}
+
+function createAndUpdateStorage(employeePayrollData) {
+    let employeePayrollList = JSON.parse(localStorage.getItem("EmployeePayrollList"));
+    if (employeePayrollList == undefined) {
+        employeePayrollList = [employeePayrollData];
+    } else {
+        employeePayrollList.push(employeePayrollData);
+    }
+    localStorage.setItem("EmployeePayrollListList", JSON.stringify(employeePayrollList));
 }
